@@ -1,14 +1,14 @@
-FROM decidim/decidim:0.29.3
+FROM ruby:3.2.2
+
+RUN apt-get update -qq && \
+    apt-get install -y curl gnupg2 postgresql-client && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
 
 WORKDIR /app
 COPY . .
 
-# Instala dependencias si hace falta
-RUN bundle install
-RUN yarn install --check-files
+RUN gem install bundler && bundle install
 
-# Precompila assets (opcional para producción)
-# RUN bundle exec rake assets:precompile
-
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
