@@ -26,6 +26,7 @@ class CouncilsController < ApplicationController
     @council.banner.attach(params[:banner])
 
     if @council.save
+      DeployCouncilService.new(@council).call
       if @council.logo.attached? and  @council.banner.attached?
         logo_url=url_for(@council.logo)
         banner_url=url_for(@council.banner)
