@@ -14,4 +14,4 @@ def deploy(id):
         return f"Error en el despliegue: {e.stderr}", 500
 
 if __name__ == "__main__":
-    app.run(port=4001)
+    app.run(host="0.0.0.0", port=4001)
