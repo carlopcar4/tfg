@@ -36,5 +36,10 @@ services:
     depends_on:
       - backend
 
+  flask:
+    build: ./flask
+    ports:
+      - '4001:4001'
+
 volumes:
   postgres_data:

@@ -49,8 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_10_102949) do
     t.string "province"
     t.string "population"
     t.boolean "multi_tenant"
+    t.string "status"
     t.text "collaborations", default: [], array: true
-    t.string "services", default: [], array: true
+    t.text "services", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
