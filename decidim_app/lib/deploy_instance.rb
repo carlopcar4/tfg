@@ -13,6 +13,16 @@ class DeployInstance
     tn = { locale => name }                
 
     org = Decidim::Organization.first()
+    if org.nil?
+      org = Decidim::Organization.create!(
+      name:              tn,
+      description:       { locale => "Organización de prueba para #{id}" },
+      reference_prefix:  name[0,3].upcase,    # <- nuevo (p.e. “BAR”)
+      host:              "#{name.parameterize}.localhost",
+      available_locales: [locale],
+      default_locale:    locale
+    )
+    end
 
     if logo.present?
       org.logo.attach(

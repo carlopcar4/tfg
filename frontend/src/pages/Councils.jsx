@@ -15,18 +15,18 @@ function CouncilList() {
 
     const handleDeploy = async (id) => {
         try {
-            const response = await fetch(`http://localhost:4001/deploy/${id}`, {
+            const res = await fetch(`http://localhost:4001/deploy/${id}`, {
                 method: 'POST',
             });
 
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
+            if (!res.ok) {
+                alert("Error al desplegar el municipio");
+            }else{
+                alert("Municipio desplegado correctamente");
             }
 
-            window.location.reload();
         } catch (error) {
             console.error("Error al desplegar:", error);
-            // Aquí puedes mostrar una notificación al usuario, si lo deseas
         }
     };
 
@@ -107,3 +107,5 @@ function CouncilList() {
 }
 
 export default CouncilList;
+
+

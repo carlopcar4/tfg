@@ -8479,10 +8479,20 @@ typical@^5.2.0:
   resolved "https://registry.yarnpkg.com/typical/-/typical-5.2.0.tgz#4daaac4f2b5315460804f0acf6cb69c52bb93066"
   integrity sha512-dvdQgNDNJo+8B2uBQoqdb11eUCE1JQXhvjC/CZtgvZseVd5TYMXnq0+vuUemXbd/Se29cTaUuPX3YIc2xgbvIg==
 
-uc.micro@1.0.1, uc.micro@^1.0.1, uc.micro@^1.0.5, uc.micro@^2.0.0, uc.micro@^2.1.0:
+uc.micro@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.1.tgz#b4bca8b68246f45e8ead366a7e6cbd05e27d3293"
   integrity sha512-mrmnVnvKTqIcB3jGvzPD5Zfvsgk/ISKsT5eQt9cruilmUH56XTG0a42Ege9dyY4ZfE5LKyFi8N5tAs4jbdjcHA==
+
+uc.micro@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
+
+uc.micro@^2.0.0, uc.micro@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-2.1.0.tgz#f8d3f7d0ec4c3dea35a7e3c8efa4cb8b45c9e7ee"
+  integrity sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==
 
 unbox-primitive@^1.1.0:
   version "1.1.0"
