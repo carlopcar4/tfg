@@ -760,6 +760,7 @@ DEPENDENCIES
   brakeman (~> 6.1)
   byebug (~> 11.0)
   decidim (= 0.29.3)
+  decidim-api (~> 0.29.3)
   decidim-dev (= 0.29.3)
   letter_opener_web (~> 2.0)
   listen (~> 3.1)

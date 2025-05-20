@@ -99,36 +99,34 @@ function ContentCouncil() {
                 <div className='columna'>
 
                     <div className="card">
+                        <h2>basic information</h2>
                         <label>Name
-                            <br /><input type="text" value={nombre} onChange={e => setNombre(e.target.value)} />
+                            <br /><input type="text" value={nombre} />
                         </label>
 
                         <label>Province
-                            <select value={provincia} onChange={e => { SetProvincia(e.target.value), SetPoblacion('') }}>
-                                <option value="">Select</option>{Object.keys(provincias).map(p => (<option key={p}>{p}</option>))}
-                            </select>
+                            <br /><input type="text" value={provincia} />
                         </label>
 
                         <label>Population
-                            <select value={poblacion} onChange={e => SetPoblacion(e.target.value)} disabled={!provincia}>
-                                <option value="">Select</option>
-                                {provincias[provincia]?.map(p => (<option key={p}>{p}</option>))}
-                            </select>
+                            <br /><input type="text" value={poblacion} />
                         </label>
 
                         <label>
-                            <input type="checkbox" checked={multi} onChange={e => setMulti(e.target.checked)} />
+                            <input type="checkbox" checked={multi}  />
                             Multi-Tenant
                         </label>
                     </div>
 
                     <div className='card'>
+                        <h2>Logo</h2>
                         <input ref={logoRef} type='file' accept='image/*' hidden
                             onChange={e => {
                                 const f = e.target.files[0];
                                 if (f) setLogo(URL.createObjectURL(f));
                             }} />{logo && <img src={logo} alt='logo' className='preview logo' />}<br />
 
+                            <h2>Banner</h2>
                         <input ref={bannerRef} type='file' accept='image/*' hidden
                             onChange={e => {
                                 const f = e.target.files[0];

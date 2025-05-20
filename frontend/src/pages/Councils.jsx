@@ -34,6 +34,10 @@ function CouncilList() {
         navegar(`/Councils/${id}`);
     };
 
+    // const handleView = (id) => {
+    //     navegar(`http:///${id}`);
+    // };
+
     const handleReset = (id) => {
         fetch(`http://localhost:4000/councils/${id}/reset`, {
             method: 'PATCH',

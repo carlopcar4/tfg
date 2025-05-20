@@ -9,6 +9,7 @@ gem "decidim", "0.29.3"
 # gem "decidim-design", "0.29.3"
 # gem "decidim-initiatives", "0.29.3"
 # gem "decidim-templates", "0.29.3"
+gem "decidim-api", "~> 0.29.3"
 
 gem "bootsnap", "~> 1.3"
 
