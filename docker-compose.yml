@@ -19,6 +19,8 @@ services:
       - postgres
     ports:
       - '3000:3000'
+    volumes:
+      - ./decidim_app:/app
 
   backend:
     build: ./backend
@@ -28,6 +30,8 @@ services:
       - postgres
     ports:
       - '4000:4000'
+    volumes:
+      - ./backend:/app
 
   frontend:
     build: ./frontend
@@ -35,6 +39,8 @@ services:
       - '5173:5173'
     depends_on:
       - backend
+    volumes:
+      - ./frontend/src:/app/src
 
   flask:
     build: ./flask
@@ -42,6 +48,7 @@ services:
       - '4001:4001'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./flask:/app
 
 volumes:
   postgres_data:

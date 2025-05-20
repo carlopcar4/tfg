@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
 WORKDIR /app
 COPY . .
 
-RUN gem install bundler && gem install decidim && bundle install && yarn install
+RUN gem install bundler && bundle install && yarn install
 
 
 

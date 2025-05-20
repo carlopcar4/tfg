@@ -1,7 +1,9 @@
 from flask import Flask
+from flask_cors import CORS
 import subprocess
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/deploy/<id>', methods=['POST'])
 def deploy(id):
