@@ -1,7 +1,9 @@
 from flask import Flask
+from flask_cors import CORS
 import subprocess
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/deploy/<id>', methods=['POST'])
 def deploy(id):
@@ -11,7 +13,9 @@ def deploy(id):
         result = subprocess.run(docker, capture_output=True, text=True, check=True)
         return f"Despliegue ejecutado: {result.stdout}", 200
     except subprocess.CalledProcessError as e:
+        print("ERROR DESDE RUBY:\n", e.stderr)  
         return f"Error en el despliegue: {e.stderr}", 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4001)

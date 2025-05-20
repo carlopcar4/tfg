@@ -32,22 +32,15 @@
 
 .council-table th,
 .council-table td {
-    padding: .75rem 1rem;
+    padding: 15px;
     border: 1px solid var(--border);
     text-align: left;
 }
 
-.col-acciones {
-    width: 140px;
-}
 
-.acciones {
-    display: flex;
-    gap: .5rem;
-    justify-content: center;
-}
 
-.acciones button {
+
+.acciones2 button {
     background: none;
     border: 0;
     font-size: 1rem;
@@ -56,11 +49,11 @@
     transition: transform .1s ease;
 }
 
-.acciones button:hover {
+.acciones2 button:hover {
     transform: scale(1.1);
 }
 
-.acciones .danger {
+.acciones2 .danger {
     color: var(--danger);
 }
 
@@ -81,3 +74,4 @@
 .im{
     display: flex;
 }
+

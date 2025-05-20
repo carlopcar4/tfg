@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
     FaEye,
     FaSyncAlt,
-    FaArrowUp,FaStop,
-    FaTrash,FaEdit
+    FaArrowUp, FaStop,
+    FaTrash, FaEdit
 } from 'react-icons/fa';
 import './CouncilList.css';
 
@@ -13,13 +13,22 @@ function CouncilList() {
 
     const navegar = useNavigate();
 
-    const handleDeploy = (id) => {
-        fetch(`http://localhost:4000/councils/${id}/deploy`, {
-            method: 'PATCH',
-        })
-        .then(() => window.location.reload())
-        .catch(error => console.error("Error al desplegar:", error))
-    };
+    const handleDeploy = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:4001/deploy/${id}`, {
+            method: 'POST',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+
+        window.location.reload();
+    } catch (error) {
+        console.error("Error al desplegar:", error);
+        // Aquí puedes mostrar una notificación al usuario, si lo deseas
+    }
+};
 
     const handleEdit = (id) => {
         navegar(`/Councils/${id}`);
@@ -29,19 +38,18 @@ function CouncilList() {
         fetch(`http://localhost:4000/councils/${id}/reset`, {
             method: 'PATCH',
         })
-        .then(() => window.location.reload())
-        .catch(error => console.error("Error al reiniciar: ", error))
+            .then(() => window.location.reload())
+            .catch(error => console.error("Error al reiniciar: ", error))
     };
 
     const handleDestroy = (id) => {
-        if(!window.confirm("¿Estas seguro de que quieres eliminar este municipio?")) return;
+        if (!window.confirm("¿Estas seguro de que quieres eliminar este municipio?")) return;
         fetch(`http://localhost:4000/councils/${id}`, {
             method: 'DELETE',
         })
-        .then(() => window.location.reload())
-        .catch(error => console.error("Error al desplegar: ", error))
+            .then(() => window.location.reload())
+            .catch(error => console.error("Error al desplegar: ", error))
     };
-
 
     useEffect(() => {
         fetch('http://localhost:4000/councils', {
@@ -59,10 +67,16 @@ function CouncilList() {
             <table className="council-table">
                 <thead>
                     <tr>
-                        <th>Instancia</th>
+                        <th>Municipio</th>
                         <th>Multi-tenant</th>
                         <th>Estado</th>
-                        <th className="col-acciones">Acciones</th>
+                        <th className='col-lista'>   Colaboraciones   </th>
+                        <th className='col-lista'>   Servicios   </th>
+                        <th>Ver</th>
+                        <th>Resetear</th>
+                        <th>Desplegar</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,21 +85,22 @@ function CouncilList() {
                             <td>{r.name}</td>
                             <td>{String(r.multi_tenant)}</td>
                             <td>{r.status}</td>
-                            <td className="acciones">
-                                <button title="Ver"><FaEye /></button>
-                                <button title="Refrescar" onClick={() => handleReset(r.id)}><FaSyncAlt /></button>
-                                <button title={r.status === 'running'? 'Parar' : 'Desplegar'} 
-                                onClick={() => handleDeploy(r.id)}>{r.status === 'running' ? <FaStop/> : <FaArrowUp/>} </button>
-                                <button title="Editar" onClick={() => handleEdit(r.id)}><FaEdit /></button>
-                                <button title="Eliminar" onClick={() => handleDestroy(r.id)} className="danger"><FaTrash /></button>
-                            </td>
+                            <td className='lista'>{r.collaborations.join(', ')}</td>
+                            <td className='lista'>{r.services.join(', ')}</td>
+                            <td className="acciones2"><button title="Ver"><FaEye /></button></td>
+                            <td className="acciones2"><button title="Refrescar" onClick={() => handleReset(r.id)}><FaSyncAlt /></button></td>
+                            <td className="acciones2"><button title={r.status === 'running' ? 'Parar' : 'Desplegar'}
+                                onClick={() => handleDeploy(r.id)}>{r.status === 'running' ? <FaStop /> : <FaArrowUp />} </button></td>
+                            <td className="acciones2"><button title="Editar" onClick={() => handleEdit(r.id)}><FaEdit /></button></td>
+                            <td className="acciones2"><button title="Eliminar" onClick={() => handleDestroy(r.id)} className="danger"><FaTrash /></button></td>
+
                         </tr>
                     ))}
                 </tbody>
             </table>
 
             <div className='boton'>
-                <button className="bot" title="New council" onClick={()=>navegar('/CreateCouncil')}>Crear Municipio</button>
+                <button className="bot" title="New council" onClick={() => navegar('/CreateCouncil')}>Crear Municipio</button>
             </div>
         </div>
     );
