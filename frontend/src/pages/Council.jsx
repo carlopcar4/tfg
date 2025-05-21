@@ -11,6 +11,8 @@ function ContentCouncil() {
     const [nombre, setNombre] = useState('');
     const [provincia, SetProvincia] = useState('');
     const [poblacion, SetPoblacion] = useState('');
+    const [puerto1, SetPuerto1] = useState(3001);
+    const [puerto2, SetPuerto2] = useState(3002);
     const [multi, setMulti] = useState(false);
     const [colSel, SetColSel] = useState([]);
     const [serSel, SetSerSel] = useState([]);
@@ -49,6 +51,8 @@ function ContentCouncil() {
             setNombre(caract.name || '')
             SetProvincia(caract.province || '')
             SetPoblacion(caract.population || '')
+            SetPuerto1(caract.puerto_org || 3001)
+            SetPuerto2(caract.puerto_proc_part || 3002)
             setMulti(caract.multi_tenant || false)
             SetColSel(caract.collaborations || [])
             SetSerSel(caract.services || [])
@@ -65,14 +69,8 @@ function ContentCouncil() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("name", nombre);
-        formData.append("province", provincia);
-        formData.append("population", poblacion);
-        formData.append("multi_tenant", multi);
         colSel.forEach(e => formData.append("collaborations[]", e));
         serSel.forEach(i => formData.append("services[]", i));
-        formData.append("logo", logoRef.current.files[0]);
-        formData.append("banner", bannerRef.current.files[0]);
 
         fetch(`http://localhost:4000/councils/${id}`, {
             method: 'PATCH',
@@ -82,7 +80,7 @@ function ContentCouncil() {
                 if (res.ok) {
                     alert('Municipio modificado correctamente');
                     nav('/')
-                }else if (res.status === 204){
+                } else if (res.status === 204) {
                     nav('/')
                 } else {
                     alert("Error al modificar el municipio")
@@ -101,19 +99,27 @@ function ContentCouncil() {
                     <div className="card">
                         <h2>basic information</h2>
                         <label>Name
-                            <br /><input type="text" value={nombre} />
+                            <br /><input type="text" defaultValue={nombre} readOnly/>
                         </label>
 
                         <label>Province
-                            <br /><input type="text" value={provincia} />
+                            <br /><input type="text" defaultValue={provincia} readOnly/>
                         </label>
 
                         <label>Population
-                            <br /><input type="text" value={poblacion} />
+                            <br /><input type="text" defaultValue={poblacion} readOnly/>
+                        </label>
+
+                        <label>Puerto 1
+                            <br /><input type="text" defaultValue={puerto1} readOnly/>
+                        </label>
+
+                        <label>Puerto 2
+                            <br /><input type="text" defaultValue={puerto2} readOnly/>
                         </label>
 
                         <label>
-                            <input type="checkbox" checked={multi}  />
+                            <input type="checkbox" defaultChecked={multi} readOnly/>
                             Multi-Tenant
                         </label>
                     </div>
@@ -126,7 +132,7 @@ function ContentCouncil() {
                                 if (f) setLogo(URL.createObjectURL(f));
                             }} />{logo && <img src={logo} alt='logo' className='preview logo' />}<br />
 
-                            <h2>Banner</h2>
+                        <h2>Banner</h2>
                         <input ref={bannerRef} type='file' accept='image/*' hidden
                             onChange={e => {
                                 const f = e.target.files[0];

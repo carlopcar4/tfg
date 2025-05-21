@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_10_094914) do
     t.string "province"
     t.string "population"
     t.boolean "multi_tenant"
+    t.integer "puerto_org"
+    t.integer "puerto_proc_part"
     t.text "collaborations", default: [], array: true
     t.text "services", default: [], array: true
     t.datetime "created_at", null: false

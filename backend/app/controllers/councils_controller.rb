@@ -106,7 +106,7 @@ class CouncilsController < ApplicationController
   private
 
   def council_params
-    params.permit(:name, :province, :population, :multi_tenant, collaborations: [], services: [])
+    params.permit(:name, :province, :population, :puerto_org, :puerto_proc_part, :multi_tenant, collaborations: [], services: [])
   end
 
 

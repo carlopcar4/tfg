@@ -25,6 +25,8 @@ function CreateCouncil() {
     const [nombre, setNombre] = useState('');
     const [provincia, SetProvincia] = useState('');
     const [poblacion, SetPoblacion] = useState('');
+    const [puerto1, SetPuerto1] = useState(3001);
+    const [puerto2, SetPuerto2] = useState(3002);
     const [multi, setMulti] = useState(false);
     const [colSel, SetColSel] = useState([]);
     const [serSel, SetSerSel] = useState([]);
@@ -49,6 +51,8 @@ function CreateCouncil() {
         formData.append("province", provincia);
         formData.append("population", poblacion);
         formData.append("multi_tenant", multi);
+        formData.append("puerto_org", puerto1);
+        formData.append("puerto_proc_part", puerto2);
         colSel.forEach(e => formData.append("collaborations[]", e));
         serSel.forEach(i => formData.append("services[]", i));
         formData.append("logo", logoRef.current.files[0]);
@@ -93,6 +97,14 @@ function CreateCouncil() {
                                 <option value="">Select</option>
                                 {provincias[provincia]?.map(p => (<option key={p}>{p}</option>))}
                             </select>
+                        </label>
+
+                        <label>Puerto 1
+                            <br /><input type="text" value={puerto1} onChange={e => SetPuerto1(parseInt(e.target.value) || 3001)} required />
+                        </label>
+
+                        <label>Puerto 2
+                            <br /><input type="text" value={puerto2} onChange={e => SetPuerto2(parseInt(e.target.value) || 3002)} required />
                         </label>
 
                         <label>
