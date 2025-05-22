@@ -12,17 +12,14 @@ class DeployInstance
 
     tn = { locale => name }                
 
-    org = Decidim::Organization.first()
-    if org.nil?
-      org = Decidim::Organization.create!(
+    org = Decidim::Organization.create!(
       name:              tn,
-      description:       { locale => "Organización de prueba para #{id}" },
+      description:       { locale => "Organización de prueba para #{name}" },
       reference_prefix:  name[0,3].upcase,    # <- nuevo (p.e. “BAR”)
       host:              "#{name.parameterize}.localhost",
       available_locales: [locale],
       default_locale:    locale
     )
-    end
 
     if logo.present?
       org.logo.attach(
@@ -56,11 +53,10 @@ class DeployInstance
       org.highlighted_content_banner_enabled = true
       org.save!
 
-      process.banner_image = banner
-      # process.hero_image.attach(
-      #   io: URI.open(banner),
-      #   filename: "banner.jpg"
-      # )
+      process.hero_image.attach(
+        io: URI.open(banner),
+        filename: "banner.jpg"
+      )
       process.save!
 
     end
