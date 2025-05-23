@@ -1,1 +1,0 @@
-require Rails.root.join("app/presenters/decidim/participatory_process_presenter_decorator")

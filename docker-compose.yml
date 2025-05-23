@@ -11,16 +11,16 @@ services:
     ports:
       - '55432:55432'
 
-  decidim:
-    build: ./decidim_app
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/decidim
-    depends_on:
-      - postgres
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./decidim_app:/app
+  # decidim:
+  #   build: ./decidim_app
+  #   environment:
+  #     DATABASE_URL: postgres://postgres:postgres@postgres:5432/decidim
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./decidim_app:/app
 
   backend:
     build: ./backend
@@ -42,13 +42,13 @@ services:
     volumes:
       - ./frontend/src:/app/src
 
-  flask:
-    build: ./flask
-    ports:
-      - '4001:4001'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./flask:/app
+  # flask:
+  #   build: ./flask
+  #   ports:
+  #     - '4001:4001'
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./flask:/app
 
 volumes:
   postgres_data:

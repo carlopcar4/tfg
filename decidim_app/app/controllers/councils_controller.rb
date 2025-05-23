@@ -1,2 +1,0 @@
-class CouncilsController < ApplicationController
-end
