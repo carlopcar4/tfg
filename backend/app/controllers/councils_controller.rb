@@ -31,6 +31,7 @@ class CouncilsController < ApplicationController
         logo_url=url_for(@council.logo)
         banner_url=url_for(@council.banner)
         t = @council.as_json.merge(logo_url: logo_url, banner_url: banner_url)
+        # system("bash #{Rails.root}/lib/crear_instancia.sh #{@council.id}")
 
         render json: t, status: :created
       else

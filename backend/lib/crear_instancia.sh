@@ -9,6 +9,7 @@ function datos() {
     n=$(jq -r .name datos.json)
     nom="${n// /-}"
     nombre="${nom,,}"
+    nombre_docker="${nombre//-/_}"
     puerto1=$(jq -r .puerto_org datos.json)
     puerto2=$(jq -r .puerto_proc_part datos.json)
     logo=$(jq -r .logo_url datos.json)
@@ -22,6 +23,7 @@ function crear_carpeta() {
     rm -rf "decidim_$nombre"
     cp -r decidim_base "decidim_$nombre"
     cd "decidim_$nombre"
+    nombre_docker="${nombre//-/_}"
     touch .env
     echo "NOMBRE=$nombre" > .env
     echo "nombre_docker=${nombre//-/_}" >> .env
@@ -30,26 +32,16 @@ function crear_carpeta() {
     echo "BANNER=$banner" >> .env
     echo "COLAB=$colab" >> .env
     echo "SERVICIOS=$servicios" >> .env
-    echo "DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_$nombre_docker" >> .env
-
+    echo "DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}" >> .env
 }
 
 function crear_docker() {
-    docker-compose --env-file .env build
-    docker-compose --env-file .env run --rm app bundle exec rails db:migrate
+    docker-compose --env-file .env down --remove-orphans
+    docker-compose --env-file .env up -d
+    docker exec -it decidim_${nombre_docker}_app_1 bundle exec rails db:create
+    docker exec -it decidim_${nombre_docker}_app_1 bundle exec rails db:migrate
 }
 
 datos $id 
 crear_carpeta
-# # ESTO ES PARA PRUEBA
-#     rm -rf /home/carlos/TFG/"decidim_$nombre"
-
-# # CREACIÓN DE LA INSTANCIA
-#     cp -r /home/carlos/TFG/decidim_base/prueba/ /home/carlos/TFG/"decidim_$nombre"
-
-# # CREACIÓN DE .ENV
-#     cd /home/carlos/TFG/"decidim_$nombre"/
-#     
-
-#     docker-compose --env-file .env up -d
-
+crear_docker
