@@ -22,7 +22,7 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}
       - RAILS_ENV=development
     ports:
-      - "${PUERTO1}:3000"
+      - "${puerto1}:3000"
     networks:
       - decidim_net
     depends_on:

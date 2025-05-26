@@ -42,13 +42,13 @@ services:
     volumes:
       - ./frontend/src:/app/src
 
-  # flask:
-  #   build: ./flask
-  #   ports:
-  #     - '4001:4001'
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./flask:/app
+  flask:
+    build: ./flask
+    ports:
+      - '4001:4001'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./flask:/app
 
 volumes:
   postgres_data:
