@@ -43,7 +43,7 @@ function CreateCouncil() {
     const listas = (item, list, setList) =>
         setList(l => (l.includes(item) ? l.filter(i => i !== item) : [...l, item]));
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -58,19 +58,34 @@ function CreateCouncil() {
         formData.append("logo", logoRef.current.files[0]);
         formData.append("banner", bannerRef.current.files[0]);
 
-        fetch('http://localhost:4000/councils', {
+        try {
+
+            const res = await fetch('http://localhost:4000/councils', {
             method: 'POST',
             body: formData
-        })
-            .then(res => {
-                if (res.ok) {
-                    alert("Municipio creado correctamente");
-                    nav("/");
-                } else {
-                    alert("Error al crear el municipio")
-                }
-            })
-            .catch(() => alert("Error de conexión con el servidor"));
+        });
+            if (!res.ok) {
+                alert("Error al crear el municipio");
+            }
+            const data = await res.json();
+            const id = data.id;
+            const flaskRes = await fetch(`http://localhost:4001/api/crear_instancia`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id})
+            });
+            
+            if (!flaskRes.ok) {
+                alert("Municipio creaddo pero error al desplegar la instancia");
+            } else {
+                alert("Municipio e instancia creados");
+            }
+            nav('/');
+        } catch(error) {
+            alert("Error de conexión con el servidor");
+        }
     };
 
     return (
