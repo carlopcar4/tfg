@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 id=$1
 
 function datos() {
@@ -23,17 +23,17 @@ function crear_carpeta() {
     cd /app
     rm -rf "decidim_$nombre"
     cp -r decidim_base "decidim_$nombre"
-    cd "decidim_$nombre"
+    cd /app/"decidim_$nombre"
     nombre_docker="${nombre//-/_}"
     touch .env
-    echo "nombre=$nombre" > .env
-    echo "nombre_docker=${nombre//-/_}" >> .env
-    echo "puerto1=$puerto1" >> .env
-    echo "logo=$logo" >> .env
-    echo "banner=$banner" >> .env
-    echo "colab=$colab" >> .env
-    echo "servicios=$servicios" >> .env
-    echo "database_url=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}" >> .env
+    echo "NOMBRE=$nombre" > .env
+    echo "NOMBRE_DOCKER=${nombre//-/_}" >> .env
+    echo "PUERTO1=$puerto1" >> .env
+    echo "LOGO=$logo" >> .env
+    echo "BANNER=$banner" >> .env
+    echo "COLAB=$colab" >> .env
+    echo "SERVICIOS=$servicios" >> .env
+    echo "DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}" >> .env
 }
 
 function crear_docker() {

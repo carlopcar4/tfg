@@ -7,3 +7,4 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # You can remove the 'faker' gem if you do not want Decidim seeds.
 Decidim.seed!
+load Rails.root.join("db/seeds/municipio.rb")

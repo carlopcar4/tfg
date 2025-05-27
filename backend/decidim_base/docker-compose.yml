@@ -13,16 +13,17 @@ services:
 
   app:
     image: decidim/decidim:latest
+    env_file: ./.env
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
     environment:
       - PORT=3000
-      - DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}
+      - DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${NOMBRE_DOCKER}
       - RAILS_ENV=development
     ports:
-      - "${puerto1}:3000"
+      - "${PUERTO1}:3000"
     networks:
       - decidim_net
     depends_on:
