@@ -33,7 +33,6 @@ function crear_carpeta() {
     echo "BANNER=$banner" >> .env
     echo "COLAB=$colab" >> .env
     echo "SERVICIOS=$servicios" >> .env
-    echo "DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${nombre_docker}" >> .env
 }
 
 function crear_docker() {
