@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  pg:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - decidim_net
+
+  app:
+    image: decidim/decidim:latest
+    env_file: ./.env
+    volumes:
+      - .:/code
+      - bundle:/usr/local/bundle
+      - node_modules:/code/node_modules
+    working_dir: /code
+
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${NOMBRE_DOCKER}
+      - RAILS_ENV=development
+    ports:
+      - "${PUERTO1}:3000"
+    networks:
+      - decidim_net
+    depends_on:
+      - pg
+    command: bundle exec puma
+
+volumes:
+  pg-data: {}
+  node_modules: {}
+  bundle: {}
+
+networks:
+  decidim_net:
