@@ -2,7 +2,7 @@ FROM ruby:3.2.2
 
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client yarn
 
-WORKDIR /app
+WORKDIR /code
 COPY . .
 
 RUN gem install bundler && bundle install && apt-get install -y jq

@@ -17,8 +17,10 @@ function datos() {
     nombre_docker="${nombre//-/_}"
     puerto1=$(jq -r .puerto_org datos.json)
     puerto2=$(jq -r .puerto_proc_part datos.json)
-    logo=$(jq -r .logo_url datos.json)
-    banner=$(jq -r .banner_url datos.json)
+    log=$(jq -r .logo_url datos.json)
+    logo="${log//backend/$backend_host}"
+    ban=$(jq -r .banner_url datos.json)
+    banner="${ban//backend/$backend_host}"
     colab=$(jq -r '.collaborations | join(",")' datos.json)
     servicios=$(jq -r '.services | join(",")' datos.json)
 }
@@ -30,8 +32,8 @@ function crear_carpeta() {
     cd /app/"decidim_$nombre"
     nombre_docker="${nombre//-/_}"
     touch .env
-    # curl -sSL "$logo" -o /tmp/logo.png
-    # curl -sSL "$banner" -o /tmp/banner.png
+    curl -fsSL "$logo" -o /tmp/logo.png
+    curl -fsSL "$banner" -o /tmp/banner.png
     echo "NOMBRE=$nombre" > .env
     echo "NOMBRE_DOCKER=${nombre//-/_}" >> .env
     echo "PUERTO1=$puerto1" >> .env
