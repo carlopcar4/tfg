@@ -1,10 +1,14 @@
 #!/bin/bash
 set -x
+
 id=$1
 
 function datos() {
-    cd /app/lib
-    curl -s http://backend:4000/councils/$1 | tee datos.json
+    # cd /app/lib
+    backend_host=$(getent hosts backend | awk '{ print $1 }')
+    echo "back_ip: $backend_host"
+    curl -s "http://$backend_host:4000/councils/$1" > datos.json
+
 
     ./acentos.sh datos.json
     n=$(jq -r .name datos.json)
@@ -26,6 +30,8 @@ function crear_carpeta() {
     cd /app/"decidim_$nombre"
     nombre_docker="${nombre//-/_}"
     touch .env
+    # curl -sSL "$logo" -o /tmp/logo.png
+    # curl -sSL "$banner" -o /tmp/banner.png
     echo "NOMBRE=$nombre" > .env
     echo "NOMBRE_DOCKER=${nombre//-/_}" >> .env
     echo "PUERTO1=$puerto1" >> .env
