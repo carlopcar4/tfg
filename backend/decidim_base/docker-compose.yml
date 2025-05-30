@@ -14,10 +14,12 @@ services:
   app:
     image: decidim/decidim:latest
     env_file: ./.env
+    working_dir: /app
     volumes:
-      - .:/app
+      - ./backend/decidim_${NOMBRE_DOCKER}:/app
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
+    
     environment:
       - PORT=3000
       - DATABASE_URL=postgres://postgres:postgres@pg:5432/decidim_${NOMBRE_DOCKER}

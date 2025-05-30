@@ -4,7 +4,7 @@ set -x
 id=$1
 
 function datos() {
-    # cd /app/lib
+    cd /app/lib
     backend_host=$(getent hosts backend | awk '{ print $1 }')
     echo "back_ip: $backend_host"
     curl -s "http://$backend_host:4000/councils/$1" > datos.json
@@ -32,8 +32,6 @@ function crear_carpeta() {
     cd /app/"decidim_$nombre"
     nombre_docker="${nombre//-/_}"
     touch .env
-    curl -fsSL "$logo" -o /tmp/logo.png
-    curl -fsSL "$banner" -o /tmp/banner.png
     echo "NOMBRE=$nombre" > .env
     echo "NOMBRE_DOCKER=${nombre//-/_}" >> .env
     echo "PUERTO1=$puerto1" >> .env
@@ -45,8 +43,10 @@ function crear_carpeta() {
 
 function crear_docker() {
     cd /app/decidim_$nombre
-    docker exec decidim_${nombre_docker}_pg_1 psql -U postgres -c "DROP DATABASE IF EXISTS decidim_${nombre_docker}"
     docker-compose --env-file .env down --remove-orphans
+    docker-compose --env-file .env up -d
+
+    docker exec decidim_${nombre_docker}_pg_1 psql -U postgres -c "DROP DATABASE IF EXISTS decidim_${nombre_docker}"
     docker-compose --env-file .env up -d
     docker exec decidim_${nombre_docker}_app_1 bundle exec rails db:create
     docker exec decidim_${nombre_docker}_app_1 bundle exec rails db:migrate
@@ -54,4 +54,3 @@ function crear_docker() {
 
 datos $id 
 crear_carpeta
-crear_docker
